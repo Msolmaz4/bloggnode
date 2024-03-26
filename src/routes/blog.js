@@ -6,6 +6,9 @@ router.route("/")
 .post(blog.create)
 router.route("/:id")
 .get(blog.read)
+.patch(blog.update)
+.put(blog.update)
+.delete(blog.delete)
 
 
 

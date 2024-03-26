@@ -72,11 +72,16 @@ module.exports = {
 
     },
     delete:async(req,res)=>{
-         const data = await  User.findByIdAndDelete({_id:req.params.id})
+        try {
+             const data = await  User.findByIdAndDelete({_id:req.params.id})
          res.status(data.deletedCount ? 204 : 404).send({
             error: !data.deletedCount,
             data,
           });
+        } catch (error) {
+            res.send(error)
+        }
+        
     }
 
 }
