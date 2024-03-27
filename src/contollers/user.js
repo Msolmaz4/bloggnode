@@ -1,5 +1,7 @@
 "use strict"
 const User = require("../models/userModel")
+const bcrypt = require("bcryptjs")
+const Token = require("../models/token")
 
 module.exports = {
     list :async(req,res)=>{
@@ -43,24 +45,38 @@ module.exports = {
             }
         */
        req.body.isStaff = false
-       req.body.isAdmin = false
+      
+       //burda dikka tek olsaydi file coklu olunca files 
+       req.body.image =  req.body.image ? req.files.map(file => "images/" + file.originalname) :""
+
+
        const data  = await User.create(req.body)
+ 
+       
+       const tokenData = await Token.create({
+        userId: data._id,
+        token: bcrypt.hashSync(data._id.toString(), 8)
+    });
+    
        res.status(201).send({
         data,
         error:false,
-        message:"Created Successfully!"
+        message:"Created Successfully!",
+        token:tokenData.token
        })
     },
     read:async(req,res)=>{
-        console.log(req.params)
-        
-        const data = await User.findOne({_id:req.params.id})
+       // console.log(req.params.id,"params")
+       // console.log(req.user.id, "user")
+        const id = req.body?.isAdmin ? req.params.id : req.user.id
+        const data = await User.findOne({_id:id})
 
         res.status(200).send({
             data,
             error:false
         })
     },
+   
     update: async (req, res) => {
        // const id = req.body.isAdmin ? req.params.id : req.user.id;
         // findByIdAndUpdate() işlevi, veritabanında belirli bir kullanıcı kimliğine sahip bir belgeyi bulur ve günceller. Bu işlev çağrıldığında, sorgunun asenkron olarak çalışması için sonucun beklenmesi gerekir. exec() bu işlemi gerçekleştirir ve sonucu döndürür.

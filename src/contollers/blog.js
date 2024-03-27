@@ -1,6 +1,7 @@
 const Blog = require("../models/blogModel");
 
 
+
 module.exports = {
   list: async (req, res) => {
     const data = await res.getModel(Blog);
@@ -13,6 +14,8 @@ module.exports = {
   create: async (req, res) => {
     try {
       const data = await Blog.create(req.body);
+      //const veri = await data.populate("userId")
+     //console.log(veri)
       res.status(201).send({
         data,
         message: "succes",
@@ -30,7 +33,8 @@ module.exports = {
         { ...req.body, $inc: { countOfVisitors: 1 } },
         { new: true, runValidators: true }
       ).exec();
-
+     //const veri = await data.populate("userId")
+     //console.log(veri)
       res.send({
         data,
         message: "Data is loaded!",
@@ -40,6 +44,42 @@ module.exports = {
       console.log(error);
       res.send(error);
     }
+  },
+
+  likes:async(req,res)=>{
+    console.log("**************")
+ 
+    console.log(req.params.id,"likes")
+    console.log(req.user.id, "UserId")
+    let blog = await Blog.findById(req.params.id);
+    let userId = req.user.id;
+    let likes = blog.likes.map(like => like.toString());
+
+    let operator;
+    let message;
+    if (likes.includes(userId)) {
+
+      operator = '$pull';
+      message = 'Like removed';
+    } else {
+      
+      operator = '$addToSet';
+      message = 'Like added';
+    }
+
+    let updatedBlog = await Blog.findByIdAndUpdate(
+      req.params.id,
+      { [operator]: { likes: userId } },
+      { new: true, runValidators: true }
+    );
+
+    res.send({
+      data: updatedBlog,
+      message: message,
+      error: false
+    });
+   
+    
   },
   update:async(req,res)=>{
 

@@ -1,5 +1,13 @@
 const mongoose = require("mongoose")
 
+// {
+//     "username": "deneme",
+//     "password": "123456",
+//     "email": "admin1@gmail.com",
+//     "firstname": "deneme",
+ //     "isAdmin": false,
+// }
+
 const UserSchema = new mongoose.Schema({
     username:{
         type:String,
@@ -51,6 +59,7 @@ const UserSchema = new mongoose.Schema({
         default:false
 
     },
+    image:[String]
 
 },
 {timestamps:true})
