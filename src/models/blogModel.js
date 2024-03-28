@@ -11,6 +11,10 @@ const BlogSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
     },
+    commentId:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+    }],
     title: {
       type: String,
       required: true,
@@ -18,6 +22,7 @@ const BlogSchema = new mongoose.Schema(
     content: {
       type: String,
     },
+   
     isPublish: {
       type: Boolean,
       default: true,
@@ -33,3 +38,4 @@ const BlogSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("Blog", BlogSchema);
+// Bunun dışında, Comment modelinin isminin "Comments" olarak tanımlandığını görüyorum. Ancak, Comment modelini require ettiginizde "comments" olarak tanımlamışsınız. Mongoose, model isimlerini varsayılan olarak küçük harfli ve çoğul hale getirir. Bu nedenle, modeli tanımlarken kullandığınız isimle, onu require ettiğinizde kullandığınız isim aynı olmalıdır.

@@ -1,5 +1,5 @@
-const Comment = require("../models/comments");
-
+const Comment = require("../models/comment");
+const Blog= require("../models/blogModel")
 
 module.exports = {
   list: async (req, res) => {
@@ -12,7 +12,12 @@ module.exports = {
   },
   create: async (req, res) => {
     try {
+      console.log(req.body,"comment create")
       const data = await Comment.create(req.body);
+      //burda biz  yeni oluşturduğumuyz  comment modeli ile eşitlememiz  gerekiyor blogId demek                         
+      const blog = await Blog.findById(req.body.blogId);
+      blog.commentId.push(data._id);
+      await blog.save();
       res.status(201).send({
         data,
         message: "succes",
@@ -43,7 +48,7 @@ module.exports = {
     const data = await  Comment.findOneAndUpdate({_id:req.params.id},req.body,{new:true,runValidators:true}).exec();
     res.send({
         data,
-        error:error
+        error:false
 
     })
   },

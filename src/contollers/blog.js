@@ -28,15 +28,36 @@ module.exports = {
   read: async (req, res) => {
     try {
       // $inc Bu, MongoDB'de bir alanın değerini artırmak için kullanılır.
-      const data = await Blog.findByIdAndUpdate(
+     
+
+     const data = await Blog.findByIdAndUpdate(
         { _id: req.params.id },
         { ...req.body, $inc: { countOfVisitors: 1 } },
         { new: true, runValidators: true }
       ).exec();
-     //const veri = await data.populate("userId")
-     //console.log(veri)
+
+      // .populate("userId")
+      // .populate({
+      //   path: "commentId",
+      //   populate: {
+      //     path: "userId",
+      //     model: "User"
+      //   }
+      // })
+
+
+   // const veri = await data.populate(["userId","commentId"])
+    const veri = await data
+    .populate({
+      path: "commentId",
+      populate: {
+        path: "userId",
+        model: "User"
+      }
+    })
+    // console.log(veri)
       res.send({
-        data,
+      veri,
         message: "Data is loaded!",
         error: false,
       });
@@ -50,7 +71,7 @@ module.exports = {
     console.log("**************")
  
     console.log(req.params.id,"likes")
-    console.log(req.user.id, "UserId")
+   
     let blog = await Blog.findById(req.params.id);
     let userId = req.user.id;
     let likes = blog.likes.map(like => like.toString());

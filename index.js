@@ -16,7 +16,7 @@ app.use("/users",require("./src/routes/user"))
 app.use("/blogs",require(`./src/routes/blog`))
 app.use("/auth",require("./src/routes/auth"))
 app.use("/categories",require("./src/routes/categories"))
-app.use("/comments",require("./src/routes/categories"))
+app.use("/comments",require("./src/routes/comments"))
 
 app.use("/token",require('./src/routes/token'))
 app.use("/admin",require("./src/routes/admin"));
