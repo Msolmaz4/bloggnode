@@ -1,5 +1,6 @@
 
-```![blogApi](https://github.com/Msolmaz4/bloggnode/assets/86296198/457ce8df-8598-4362-8618-694dfdafb8f6)
+![blogApi](https://github.com/Msolmaz4/bloggnode/assets/86296198/882fae10-3c5c-47b0-bc18-6faed86e31a4)
+
 
 BLOG
 
