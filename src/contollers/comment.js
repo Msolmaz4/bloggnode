@@ -1,5 +1,6 @@
 const Comment = require("../models/comment");
 const Blog= require("../models/blogModel")
+const User = require("../models/userModel")
 
 module.exports = {
   list: async (req, res) => {
@@ -18,6 +19,12 @@ module.exports = {
       const blog = await Blog.findById(req.body.blogId);
       blog.commentId.push(data._id);
       await blog.save();
+      // const user = await User.findById(req.body.userId);
+      // user.commentId.push(data._id);
+      // await user.save();
+      // blog.commentId.push(data._id); Bu satırda, yeni oluşturulan yorumun id'sini, blog gönderisinin commentId dizisine ekliyoruz. Bu şekilde, blog gönderisi ile yorum arasında bir ilişki kurmuş oluyoruz.
+
+
       res.status(201).send({
         data,
         message: "succes",

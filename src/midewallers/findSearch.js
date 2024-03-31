@@ -1,4 +1,4 @@
-const { populate } = require("../models/userModel")
+
 
 
 module.exports = (req,res,next)=>{

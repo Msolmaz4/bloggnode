@@ -123,8 +123,8 @@ module.exports = {
             #swagger.description = 'Delete token-key.'
         */
 
-    const auth = req.headers?.authorization || null; // Token ...tokenKey... // Bearer ...accessToken...
-    const tokenKey = auth ? auth.split(" ") : null; // ['Token', '...tokenKey...'] // ['Bearer', '...accessToken...']
+    const auth = req.headers?.authorization || null; 
+    const tokenKey = auth ? auth.split(" ") : null; 
 
     let message = null,
       result = {};

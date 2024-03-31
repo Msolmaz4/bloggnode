@@ -14,8 +14,8 @@ module.exports = {
   create: async (req, res) => {
     try {
       const data = await Blog.create(req.body);
-      //const veri = await data.populate("userId")
-     //console.log(veri)
+      const veri = await data.populate("userId")
+     console.log(veri)
       res.status(201).send({
         data,
         message: "succes",
@@ -68,14 +68,14 @@ module.exports = {
   },
 
   likes:async(req,res)=>{
-    console.log("**************")
+   
  
-    console.log(req.params.id,"likes")
+    
    
     let blog = await Blog.findById(req.params.id);
     let userId = req.user.id;
     let likes = blog.likes.map(like => like.toString());
-
+   //https://www.mongodb.com/docs/manual/reference/operator/update/addToSet/
     let operator;
     let message;
     if (likes.includes(userId)) {
@@ -88,6 +88,9 @@ module.exports = {
       message = 'Like added';
     }
 
+  
+// Burada { [operator]: { likes: userId } } ifadesi JavaScript'teki bir nesne oluşturma tekniğidir ve dinamik olarak bir nesne oluşturmayı sağlar.
+    //  ikinci parametre olarak güncellenecek alanları ve değerleri içeren bir nesne
     let updatedBlog = await Blog.findByIdAndUpdate(
       req.params.id,
       { [operator]: { likes: userId } },

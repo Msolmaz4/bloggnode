@@ -59,7 +59,21 @@ const UserSchema = new mongoose.Schema({
         default:false
 
     },
-    image:[String]
+    image:[String],
+    commentId:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+      }],
+      
+    blogId:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Blog",
+      }],
+    Token:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Token",
+      }],
+
 
 },
 {timestamps:true})
