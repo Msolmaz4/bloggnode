@@ -4,7 +4,7 @@ require( "dotenv").config();
 const PORT = process.env.PORT || 5000;
 require("./src/config/db")
 app.use(express.json()) 
-app.use(require("./src/midewallers/logger"))
+//app.use(require("./src/midewallers/logger"))
 app.use(require("./src/midewallers/findSearch"))
 app.use(require("./src/midewallers/authentic"))
 app.all('/', (req, res) => {
